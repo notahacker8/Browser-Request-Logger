@@ -76,7 +76,7 @@ function download_all_logs()
 	{
 		data += "\n\n";
 		data += logs[i].get_log_string();
-	}
+	};
 	var url = "data:text/plain;base64," + btoa(data);
 	var a = document.createElement("a");
 	a.href = url;
