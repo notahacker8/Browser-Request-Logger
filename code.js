@@ -7,7 +7,7 @@ function obj_to_str(obj)
 {
 	var str = "{";
 	var c = 0;
-	for (p in obj) 
+	for (var p in obj) 
 	{
 		if (c > 0)
 		{
@@ -17,7 +17,7 @@ function obj_to_str(obj)
 		str += p;
 		str += ": ";
 		var v = obj[p];
-		if (typeof(v) == "string")
+		if (typeof(v) === "string")
 		{
 			v = "\"" + v + "\"";
 		};
@@ -30,7 +30,7 @@ function obj_to_str(obj)
 
 function arg_array_to_str(args)
 {
-	str = "";
+	var str = "";
 	var c = 0;
 	for (var i = 0 ; i < args.length ; i++) 
 	{
@@ -40,10 +40,10 @@ function arg_array_to_str(args)
 			str += ", ";
 		};
 		c++;
-		if (typeof(arg) == "string")
+		if (typeof(arg) === "string")
 		{
 			arg = "\"" + arg + "\"";
-		} else if (typeof(arg) == "object")
+		} else if (typeof(arg) === "object")
 		{
 			arg = obj_to_str(arg);
 		};
@@ -211,7 +211,6 @@ fetch = function(request)
 
 
 alert("logger loaded");
-
 
 
 
