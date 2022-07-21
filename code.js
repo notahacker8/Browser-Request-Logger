@@ -59,21 +59,37 @@
 
 
 
-  function download_all_logs() {
-    var logs = chrono_logs;
+  function download_logs(logs, method) {
     var data = "";
     for (var i = 0; i < logs.length; i++) {
       data += "\n\n";
       data += logs[i].get_log_string();
     };
-    var url = "data:text/plain;base64," + btoa(data);
+
+    var url = "";
     var a = document.createElement("a");
-    a.href = url;
     a.download = "logs";
-    a.click();
+
+    if (method === "blob") {
+      var blob = new Blob([data], {type: "text/plain"});
+      url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+    if (method === "base64") {
+      url = "data:text/plain;base64," + btoa(data);
+      a.href = url;
+      a.click();
+    }
+    a.remove();
   };
 
 
+  function download_all_logs()
+  {
+    download_logs(chrono_logs, "blob")
+  }
 
 
 
@@ -187,9 +203,11 @@
   };
 
 
-  alert("logger loaded");
+  alert("logger loaded!");
 
-  return download_all_logs;
+  return {
+    download_all_logs: download_all_logs
+  };
 
 
 })();
