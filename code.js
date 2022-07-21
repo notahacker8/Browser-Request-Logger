@@ -1,7 +1,9 @@
 
+// Wrapped to support eval() (I guess?)
 
-(function () {
+var http_req_logger = (function () {
 
+  // -- START OF ORIGINAL CODE
 
   function obj_to_str(obj) {
     var str = "{";
@@ -54,7 +56,7 @@
 
   var chrono_logs = [];
 
-
+  var dwnld_method = "blob";
 
 
 
@@ -86,10 +88,30 @@
   };
 
 
+  function set_dwnld_method(m)
+  {
+    dwnld_method = m;
+  };
+
   function download_all_logs()
   {
-    download_logs(chrono_logs, "blob")
-  }
+    download_logs(chrono_logs, dwnld_method);
+  };
+
+  function download_opened_xhr()
+  {
+    download_logs(opened_xhr, dwnld_method);
+  };
+
+  function download_sent_xhr()
+  {
+    download_logs(sent_xhr, dwnld_method);
+  };
+
+  function download_sent_fetch()
+  {
+    download_logs(sent_fetch, dwnld_method);
+  };
 
 
 
@@ -206,8 +228,14 @@
   alert("logger loaded!");
 
   return {
-    download_all_logs: download_all_logs
+    set_dwnld_method: set_dwnld_method,
+    download_all_logs: download_all_logs,
+    download_opened_xhr: download_opened_xhr,
+    download_sent_xhr: download_sent_xhr,
+    download_sent_fetch: download_sent_fetch
   };
+
+  // -- END OF ORIGINAL CODE
 
 
 })();
